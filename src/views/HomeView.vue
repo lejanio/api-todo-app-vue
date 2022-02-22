@@ -45,6 +45,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
+import config from "@/config";
 
 export type ItemType = {
   createdAt: string;
@@ -68,29 +69,42 @@ export default defineComponent({
   methods: {
     fetchData() {
       axios
-        .get("https://620ce155b5736325939c5e08.mockapi.io/todos")
+        .get(`${config.apiUrl}/todos`)
         .then(({ data }) => {
           this.entries = data;
           this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
     postData() {
       if (this.inputValue === "") {
         return;
       }
-      axios.post("https://620ce155b5736325939c5e08.mockapi.io/todos", {
-        name: this.inputValue,
-      });
+      axios
+        .post(`${config.apiUrl}/todos`, {
+          name: this.inputValue,
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
       this.inputValue = "";
     },
     putData(id: string, completed: boolean) {
-      axios.put(`https://620ce155b5736325939c5e08.mockapi.io/todos/${id}`, {
-        done: !completed,
-      });
+      axios
+        .put(`${config.apiUrl}/todos/${id}`, {
+          done: !completed,
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     deleteData(id: string) {
-      axios.delete(`https://620ce155b5736325939c5e08.mockapi.io/todos/${id}`);
+      axios.delete(`${config.apiUrl}/todos/${id}`).catch((err) => {
+        console.log(err);
+      });
     },
   },
 });

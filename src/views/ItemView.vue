@@ -21,6 +21,7 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import { ItemType } from "@/views/HomeView.vue";
+import config from "@/config";
 
 export default defineComponent({
   name: "ItemView",
@@ -36,10 +37,13 @@ export default defineComponent({
   methods: {
     fetchItemData(id: string | string[]) {
       axios
-        .get(`https://620ce155b5736325939c5e08.mockapi.io/todos/${id}`)
+        .get(`${config.apiUrl}/todos/${id}`)
         .then(({ data }) => {
           this.item = data;
           this.loading = false;
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
   },
