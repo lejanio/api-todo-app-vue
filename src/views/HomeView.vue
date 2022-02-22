@@ -63,6 +63,7 @@ export default defineComponent({
   components: {},
   created() {
     this.fetchData();
+    console.log("created");
   },
   methods: {
     fetchData() {
