@@ -72,14 +72,16 @@ export default defineComponent({
         .get(`${config.apiUrl}/todos`)
         .then(({ data }) => {
           this.entries = data;
-          this.loading = false;
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     postData() {
-      if (this.inputValue === "") {
+      if (this.inputValue.trim() === "") {
         return;
       }
       axios
